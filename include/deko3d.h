@@ -802,11 +802,11 @@ typedef struct DkRasterizerState
 	uint32_t rasterizerEnable : 1;
 	uint32_t depthClampEnable : 1;
 	uint32_t fillRectangleEnable : 1;
-	DkPolygonMode polygonModeFront : 2;
-	DkPolygonMode polygonModeBack : 2;
-	DkFace cullMode : 2;
-	DkFrontFace frontFace : 1;
-	DkProvokingVertex provokingVertex : 1;
+	uint32_t polygonModeFront : 2;
+	uint32_t polygonModeBack : 2;
+	uint32_t cullMode : 2;
+	uint32_t frontFace : 1;
+	uint32_t provokingVertex : 1;
 	uint32_t polygonSmoothEnableMask : 3;
 	uint32_t depthBiasEnableMask : 3;
 } DkRasterizerState;
@@ -835,13 +835,13 @@ typedef enum DkCoverageModulation
 
 typedef struct DkMultisampleState
 {
-	DkMsMode mode : 3;
-	DkMsMode rasterizerMode : 3;
+	uint32_t mode : 3;
+	uint32_t rasterizerMode : 3;
 	uint32_t alphaToCoverageEnable : 1;
 	uint32_t alphaToCoverageDither : 1;
 	uint32_t coverageToColorEnable : 1;
 	uint32_t coverageToColorOutput : 3;
-	DkCoverageModulation coverageModulation : 2;
+	uint32_t coverageModulation : 2;
 	uint32_t : 18;
 
 	uint32_t sampleLocations[4];
@@ -891,8 +891,8 @@ typedef enum DkLogicOp
 typedef struct DkColorState
 {
 	uint32_t blendEnableMask : 8;
-	DkLogicOp logicOp : 8;
-	DkCompareOp alphaCompareOp : 4;
+	uint32_t logicOp : 8;
+	uint32_t alphaCompareOp : 4;
 	uint32_t : 12;
 } DkColorState;
 
@@ -972,13 +972,13 @@ typedef enum DkBlendFactor
 
 typedef struct DkBlendState
 {
-	DkBlendOp colorBlendOp : 3;
-	DkBlendFactor srcColorBlendFactor : 6;
-	DkBlendFactor dstColorBlendFactor : 6;
+	uint32_t colorBlendOp : 3;
+	uint32_t srcColorBlendFactor : 6;
+	uint32_t dstColorBlendFactor : 6;
 
-	DkBlendOp alphaBlendOp : 3;
-	DkBlendFactor srcAlphaBlendFactor : 6;
-	DkBlendFactor dstAlphaBlendFactor : 6;
+	uint32_t alphaBlendOp : 3;
+	uint32_t srcAlphaBlendFactor : 6;
+	uint32_t dstAlphaBlendFactor : 6;
 } DkBlendState;
 
 DK_CONSTEXPR void dkBlendStateDefaults(DkBlendState* state)
@@ -1024,17 +1024,17 @@ typedef struct DkDepthStencilState
 	uint32_t depthWriteEnable : 1;
 	uint32_t stencilTestEnable : 1;
 	uint32_t : 1;
-	DkCompareOp depthCompareOp : 4;
+	uint32_t depthCompareOp : 4;
 	uint32_t : 24;
 
-	DkStencilOp stencilFrontFailOp : 4;
-	DkStencilOp stencilFrontPassOp : 4;
-	DkStencilOp stencilFrontDepthFailOp : 4;
-	DkCompareOp stencilFrontCompareOp : 4;
-	DkStencilOp stencilBackFailOp : 4;
-	DkStencilOp stencilBackPassOp : 4;
-	DkStencilOp stencilBackDepthFailOp : 4;
-	DkCompareOp stencilBackCompareOp : 4;
+	uint32_t stencilFrontFailOp : 4;
+	uint32_t stencilFrontPassOp : 4;
+	uint32_t stencilFrontDepthFailOp : 4;
+	uint32_t stencilFrontCompareOp : 4;
+	uint32_t stencilBackFailOp : 4;
+	uint32_t stencilBackPassOp : 4;
+	uint32_t stencilBackDepthFailOp : 4;
+	uint32_t stencilBackCompareOp : 4;
 } DkDepthStencilState;
 
 DK_CONSTEXPR void dkDepthStencilStateDefaults(DkDepthStencilState* state)
@@ -1108,8 +1108,8 @@ typedef struct DkVtxAttribState
 	uint32_t : 1;
 	uint32_t isFixed : 1;
 	uint32_t offset : 14;
-	DkVtxAttribSize size : 6;
-	DkVtxAttribType type : 3;
+	uint32_t size : 6;
+	uint32_t type : 3;
 	uint32_t : 1;
 	uint32_t isBgra : 1;
 } DkVtxAttribState;

@@ -113,7 +113,7 @@ Swapchain::~Swapchain()
 void Swapchain::acquireImage(int& imageSlot, DkFence& fence)
 {
 	fence.m_type = DkFence::External;
-	if (R_FAILED(nwindowDequeueBuffer(m_nwin, &imageSlot, &fence.m_external.m_fence)))
+	if (R_FAILED(nwindowDequeueBuffer(m_nwin, (s32 *)&imageSlot, &fence.m_external.m_fence)))
 		DK_ERROR(DkResult_Fail, "failed to dequeue buffer");
 }
 
