@@ -1,3 +1,4 @@
+#include <cinttypes>
 #include "dk_device.h"
 #include "dk_queue.h"
 
@@ -19,11 +20,11 @@ bool Queue::checkError()
 	if (R_FAILED(nvGpuChannelGetErrorNotification(&m_gpuChannel, &notif)) || !notif.status)
 		return false; // No error
 
-	DK_WARNING("Queue (%u) entered error state", m_id);
-	DK_WARNING("  timestamp: %lu", notif.timestamp);
-	DK_WARNING("  info32: %u", notif.info32);
-	DK_WARNING("  info16: %u", notif.info16);
-	DK_WARNING("  status: %u", notif.status);
+	DK_WARNING("Queue (%" PRIu32 ") entered error state", m_id);
+	DK_WARNING("  timestamp: %" PRId64, notif.timestamp);
+	DK_WARNING("  info32: %" PRIu32, notif.info32);
+	DK_WARNING("  info16: %" PRIu16, notif.info16);
+	DK_WARNING("  status: %" PRIu16, notif.status);
 
 	NvError error;
 	if (R_FAILED(nvGpuChannelGetErrorInfo(&m_gpuChannel, &error)))
@@ -37,14 +38,14 @@ bool Queue::checkError()
 				DK_WARNING("  No error information available");
 				break;
 			case 1:
-				DK_WARNING("  GPU page fault (info 0x%08x)", error.info[0]);
-				DK_WARNING("  Address: 0x%02x%08x", error.info[1], error.info[2]);
+				DK_WARNING("  GPU page fault (info 0x%08" PRIx32 ")", error.info[0]);
+				DK_WARNING("  Address: 0x%02" PRIx32 "%08" PRIx32, error.info[1], error.info[2]);
 				DK_WARNING("  Access type: %s", error.info[3] == 2 ? "Write" : "Read");
 				break;
 			case 2:
-				DK_WARNING("  GPU method error (irq 0x%08x)", error.info[0]);
-				DK_WARNING("  [%04x:%03x] = 0x%08x", error.info[4], (error.info[1]&0xFFFF)/4, error.info[3]);
-				DK_WARNING("  Unknown data: 0x%08x; 0x%04x", error.info[2], error.info[1]>>16);
+				DK_WARNING("  GPU method error (irq 0x%08" PRIx32 ")", error.info[0]);
+				DK_WARNING("  [%04" PRIx32 ":%03" PRIx32 "] = 0x%08" PRIx32, error.info[4], (error.info[1]&0xFFFF)/4, error.info[3]);
+				DK_WARNING("  Unknown data: 0x%08" PRIx32 "; 0x%04" PRIx32, error.info[2], error.info[1]>>16);
 				break;
 			case 3:
 				DK_WARNING("  GPU rejected command list");
@@ -53,7 +54,7 @@ bool Queue::checkError()
 				DK_WARNING("  GPU timeout");
 				break;
 			default:
-				DK_WARNING("  Unknown (%u)", error.type);
+				DK_WARNING("  Unknown (%" PRIu32 ")", error.type);
 				break;
 		}
 	}

@@ -1,3 +1,4 @@
+#include <cinttypes>
 #include "../dk_queue.h"
 #include "../dk_device.h"
 #include "../queue_compute.h"
@@ -87,7 +88,7 @@ void ComputeQueue::bindShader(CtrlCmdComputeShader const* cmd)
 	{
 		// There isn't - so now check if there's enough memory to run the shader at all
 		uint32_t minRequiredScratchMem = (cmd->perWarpScratchSize * info.numWarpsPerSm + 0x7FFF) &~ 0x7FFF;
-		DK_WARNING("throttling compute shaders (0x%x - 0x%x - 0x%x)", cmd->perWarpScratchSize, minRequiredScratchMem, totalScratchMem);
+		DK_WARNING("throttling compute shaders (0x%" PRIx32 " - 0x%" PRIx32 " - 0x%" PRIx32 ")", cmd->perWarpScratchSize, minRequiredScratchMem, totalScratchMem);
 
 		if (totalScratchMem < minRequiredScratchMem)
 		{
